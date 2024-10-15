@@ -1,24 +1,96 @@
 ﻿using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UIAutomation.Drivers;
 using NUnit.Framework;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
+using Bogus;
 
 
 namespace UIAutomation.Tests
 {
     internal class RegisterUser
     {
-        IWebDriver driver = new ChromeDriver();
+        readonly IWebDriver driver = new ChromeDriver();
+        Faker faker;
 
-        [Test]
-        public void LaunchPage()
+        [SetUp]
+        public void Setup()
         {
+            faker = new Faker();
             driver.Navigate().GoToUrl("https://automationexercise.com/");
+        }
+
+        public void VerifyHomePageIsVisible()
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(driver =>
+            ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").ToString() == "complete"
+            );
+
+            var homePageText = driver.FindElement(By.XPath("//*[@id=\"header\"]/div/div/div/div[1]/div/a/img"));
+            Assert.IsNotNull(homePageText);
+        }
+
+        public void ClickOnSignUpButton()
+        {
+            var signUpButton = By.XPath("//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[4]/a");
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            IWebElement clickableElement = wait.Until(ExpectedConditions.ElementToBeClickable(signUpButton));
+            clickableElement.Click();
+           
+        }
+
+        public void EnterSignUpUserName()
+        {
+            string name = faker.Name.FirstName();
+
+            var nameInputBox = By.XPath("//*[@id=\"form\"]/div/div/div[3]/div/form/input[2]");
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            IWebElement clickableElement = wait.Until(ExpectedConditions.ElementToBeClickable(nameInputBox));
+
+
+            driver.FindElement(By.XPath("//*[@id=\"form\"]/div/div/div[3]/div/form/input[2]")).SendKeys(name);
+
+        }
+
+        public void EnterEmail()
+        {
+            string email = faker.Name.FirstName() + "@test.com";
+
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            var emailInputBox = By.XPath("//*[@id=\"form\"]/div/div/div[3]/div/form/input[3]");
+   
+            IWebElement clickableElement = wait.Until(ExpectedConditions.ElementToBeClickable(emailInputBox));
+
+
+            clickableElement.SendKeys(email);
+        }
+
+        public void ClickSignUpButton()
+        {
+            var signUpButton = By.XPath("//*[@id=\"form\"]/div/div/div[3]/div/form/button");
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            IWebElement clickableElement = wait.Until(ExpectedConditions.ElementToBeClickable(signUpButton));
+            clickableElement.Click();            
+        }
+
+        public void ConfirmuserIsSignedUp()
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(driver =>
+            ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").ToString() == "complete"
+            );
+
+            var accountInfoText = driver.FindElement(By.XPath("//*[@id=\"form\"]/div/div/div/div[1]/h2/b"));
+            Assert.IsNotNull(accountInfoText);
+            Assert.AreEqual("ENTER ACCOUNT INFORMATION", accountInfoText.Text);
+        }
+
+
+        [TearDown]
+        public void TearDown()
+        {
+            driver.Dispose();
         }
     }
 }
