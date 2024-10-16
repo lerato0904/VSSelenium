@@ -23,7 +23,11 @@ namespace VSeleniumAutomation
         [TearDown]
         public void TearDown()
         {
-            if (driver != null)
+            if (
+                
+                
+                
+                != null)
             {
                 driver.Dispose();
             }

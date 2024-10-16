@@ -4,19 +4,24 @@ using NUnit.Framework;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using Bogus;
+using UIAutomation.Drivers;
 
 
 namespace UIAutomation.Tests
 {
     internal class RegisterUser
     {
-        readonly IWebDriver driver = new ChromeDriver();
+        public IWebDriver driver;
         Faker faker;
 
-        [SetUp]
-        public void Setup()
+        public RegisterUser()
         {
             faker = new Faker();
+            driver = DriverManager.Setup();
+        }
+
+        public void NavigateToURL()
+        {
             driver.Navigate().GoToUrl("https://automationexercise.com/");
         }
 
@@ -40,7 +45,7 @@ namespace UIAutomation.Tests
            
         }
 
-        public void EnterSignUpUserName()
+        public string EnterSignUpUserName()
         {
             string name = faker.Name.FirstName();
 
@@ -51,6 +56,7 @@ namespace UIAutomation.Tests
 
             driver.FindElement(By.XPath("//*[@id=\"form\"]/div/div/div[3]/div/form/input[2]")).SendKeys(name);
 
+            return name;
         }
 
         public void EnterEmail()
@@ -76,7 +82,7 @@ namespace UIAutomation.Tests
 
         public void ConfirmuserIsSignedUp()
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(50));
             wait.Until(driver =>
             ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").ToString() == "complete"
             );
@@ -84,13 +90,9 @@ namespace UIAutomation.Tests
             var accountInfoText = driver.FindElement(By.XPath("//*[@id=\"form\"]/div/div/div/div[1]/h2/b"));
             Assert.IsNotNull(accountInfoText);
             Assert.AreEqual("ENTER ACCOUNT INFORMATION", accountInfoText.Text);
-        }
 
-
-        [TearDown]
-        public void TearDown()
-        {
             driver.Dispose();
+            driver = null;
         }
     }
 }

@@ -5,12 +5,12 @@ using UIAutomation.Tests;
 namespace UIAutomation.StepDefinitions
 {
     [Binding]
-    public class RegisterUserStepDefinitions
+    public class SignUpUserStepDefinitions
     {
         private RegisterUser _registerUser;
 
         // Constructor to initialize the Tests class
-        public RegisterUserStepDefinitions()
+        public SignUpUserStepDefinitions()
         {
             _registerUser = new RegisterUser();  // Create instance of Tests class
         }
@@ -18,7 +18,7 @@ namespace UIAutomation.StepDefinitions
         [Given(@"\[Automation exercise URL]")]
         public void GivenAutomationExerciseURL()
         {
-            _registerUser.Setup();
+            _registerUser.NavigateToURL();
         }
 
         [When(@"\[Verify that home page is visible successfully]")]
@@ -56,7 +56,6 @@ namespace UIAutomation.StepDefinitions
         public void ThenConfirmUserIsSuccessfullySignedUp()
         {
             _registerUser.ConfirmuserIsSignedUp();
-            _registerUser.TearDown();
         }
 
     }
