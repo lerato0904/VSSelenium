@@ -12,7 +12,7 @@ namespace UIAutomation.StepDefinitions
         // Constructor to initialize the Tests class
         public SignUpUserStepDefinitions()
         {
-            _registerUser = new RegisterUser();  // Create instance of Tests class
+            _registerUser = new RegisterUser();
         }
 
         [Given(@"\[Automation exercise URL]")]

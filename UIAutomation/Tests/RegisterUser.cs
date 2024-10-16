@@ -23,6 +23,7 @@ namespace UIAutomation.Tests
         public void NavigateToURL()
         {
             driver.Navigate().GoToUrl("https://automationexercise.com/");
+            driver.Manage().Window.Maximize();
         }
 
         public void VerifyHomePageIsVisible()
@@ -90,9 +91,6 @@ namespace UIAutomation.Tests
             var accountInfoText = driver.FindElement(By.XPath("//*[@id=\"form\"]/div/div/div/div[1]/h2/b"));
             Assert.IsNotNull(accountInfoText);
             Assert.AreEqual("ENTER ACCOUNT INFORMATION", accountInfoText.Text);
-
-            driver.Dispose();
-            driver = null;
         }
     }
 }

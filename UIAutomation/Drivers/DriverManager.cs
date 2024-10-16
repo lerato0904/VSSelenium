@@ -15,14 +15,5 @@ namespace UIAutomation.Drivers
             }
             return _driver;
         }
-
-        //public void Teardown()
-        //{
-        //    _driver.Dispose();
-        //    _driver = null;
-        //}
-
-
-
     }
 }
