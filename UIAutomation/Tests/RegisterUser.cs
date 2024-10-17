@@ -5,6 +5,8 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using Bogus;
 using UIAutomation.Drivers;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.BiDi.Modules.Input;
 
 
 namespace UIAutomation.Tests
@@ -83,6 +85,9 @@ namespace UIAutomation.Tests
 
         public void ConfirmuserIsSignedUp()
         {
+            Actions scrolldown = new Actions(driver);
+            scrolldown.SendKeys(Keys.PageDown).Perform();
+
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(50));
             wait.Until(driver =>
             ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").ToString() == "complete"

@@ -108,5 +108,12 @@ namespace UIAutomation.StepDefinitions
             _createAccount.ClickOnCreateAccountButton();
         }
 
+        [Then(@"Confirm account is succesfully created")]
+        public void ThenConfirmAccountIsSuccesfullyCreated()
+        {
+            _createAccount.ConfirmAccountIsCreatedSuccesfully();
+        }
+
+
     }
 }

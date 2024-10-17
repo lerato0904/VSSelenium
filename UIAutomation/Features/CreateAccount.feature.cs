@@ -168,6 +168,9 @@ this.ScenarioInitialize(scenarioInfo);
 #line 28
  testRunner.And("Click on the CreateAccount button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
+#line 29
+ testRunner.Then("Confirm account is succesfully created", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
             }
             this.ScenarioCleanup();
         }

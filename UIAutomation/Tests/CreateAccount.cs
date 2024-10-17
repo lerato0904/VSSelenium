@@ -1,6 +1,9 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,8 +97,17 @@ namespace UIAutomation.Tests
 
         public void ClickOnCreateAccountButton()
         {
-            driver.FindElement(By.XPath("//*[@id=\"form\"]/div/div/div/div[1]/form/button")).Click();
+            Actions actions = new Actions(driver);
+            actions.SendKeys(Keys.PageDown).Perform();
+
+            IWebElement createAccount_Button = driver.FindElement(By.XPath("//*[@id=\"form\"]/div/div/div/div[1]/form/button"));
+            createAccount_Button.Click();
         }
 
+        public void ConfirmAccountIsCreatedSuccesfully()
+        {
+            var accountCreatedMessage = driver.FindElement(By.XPath("//*[@id=\"form\"]/div/div/div/h2/b"));
+            Assert.AreEqual(accountCreatedMessage.Text, "ACCOUNT CREATED!");
+        }
     }
 }

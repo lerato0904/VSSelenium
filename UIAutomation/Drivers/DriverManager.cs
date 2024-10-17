@@ -5,7 +5,7 @@ namespace UIAutomation.Drivers
 {
     internal class DriverManager
     {
-        public static IWebDriver _driver;
+        public static IWebDriver? _driver;
 
         public static IWebDriver Setup()
         {

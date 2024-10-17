@@ -26,3 +26,4 @@ Scenario: [Create user account]
 	And Enter Zip code
 	And Enter cellphone number
 	And Click on the CreateAccount button
+	Then Confirm account is succesfully created
