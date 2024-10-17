@@ -7,7 +7,7 @@ namespace APITesting
     public class Tests
     {
         [Test]
-        public void Test1()
+        public void GetAllProducts()
         {
             RestClient client = new RestClient("https://automationexercise.com/api/productsList");
             RestRequest request = new RestRequest("", Method.Get);
